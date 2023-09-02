@@ -107,7 +107,7 @@ async def query_api():
             embed.add_field(name="Server online players", value=players_status, inline=True)
 
         if display_total_joins:
-            embed.add_field(name="Server joins", value=data['server']['joins'], inline=False)
+            embed.add_field(name="Total joins", value=data['server']['joins'], inline=False)
 
         if display_server_last_online:
             epoch_time = data['server']['last_online'] / 1000
