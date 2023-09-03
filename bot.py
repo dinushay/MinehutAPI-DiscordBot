@@ -67,7 +67,6 @@ async def query_api():
         data = response.json()
         server_name = data['server']['name']
 
-        # Extract additional information from API data
         creation_timestamp = data['server']['creation']
         creation_datetime = datetime.datetime.fromtimestamp(creation_timestamp / 1000)
 
@@ -147,7 +146,7 @@ async def query_api():
         channel = bot.get_channel(channel_id)
 
         if message is None:
-            message = await channel.send(embed=embed, silent=True)
+            message = await channel.send(embed=embed)
             print(f"Message sent to {channel.name}")
         else:
             await message.edit(embed=embed)
@@ -166,7 +165,7 @@ async def query_api():
         await update_bot_status(discord.Status.idle, "API Error")
         channel = bot.get_channel(channel_id)
         embed = discord.Embed(title="API Error", description=f"Minehut-API request failed with status code: {response.status_code}", color=orange)
-        api_error_message = await channel.send(embed=embed, silent=True)
+        api_error_message = await channel.send(embed=embed)
         print(f"API Error message sent to {channel.name}")
 
         # Delete "Server Info" message if it exists
