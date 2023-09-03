@@ -51,6 +51,9 @@ async def on_ready():
 
 @tasks.loop(seconds=60)
 async def query_api():
+    global message
+    global api_error_message
+
     url = api_url
     print(f"Calling API: {url}")
     response = requests.get(url)
@@ -64,7 +67,7 @@ async def query_api():
         data = response.json()
         server_name = data['server']['name']
 
-        # Extrahiere die zusätzlichen Informationen aus den API-Daten
+        # Extract additional information from API data
         creation_timestamp = data['server']['creation']
         creation_datetime = datetime.datetime.fromtimestamp(creation_timestamp / 1000)
 
@@ -76,10 +79,8 @@ async def query_api():
         suspended = data['server']['suspended']
         server_version_type = data['server']['server_version_type']
 
-        # Initialisiere players_status, auch wenn es nicht verwendet wird, falls display_server_online_players False ist
         players_status = "N/A"
 
-        # Bestimme die Farbe basierend auf dem Serverstatus
         if 'online' in data['server']:
             if data['server']['online']:
                 status = "Online"
@@ -119,7 +120,7 @@ async def query_api():
             embed.add_field(name="Creation", value=date_creation, inline=True)
 
         if display_motd:
-            embed.add_field(name="MOTD", value=f"`{motd}`", inline=True)
+            embed.add_field(name="MOTD", value=f"```{motd}```", inline=True)
 
         if display_categories:
             embed.add_field(name="Categories", value=categories, inline=True)
@@ -145,7 +146,6 @@ async def query_api():
 
         channel = bot.get_channel(channel_id)
 
-        global message
         if message is None:
             message = await channel.send(embed=embed, silent=True)
             print(f"Message sent to {channel.name}")
@@ -153,20 +153,30 @@ async def query_api():
             await message.edit(embed=embed)
             print(f"Message edited in {channel.name}")
 
+        # Delete "Server Info" message if it exists
+        if api_error_message is not None:
+            await api_error_message.delete()
+        
         await update_bot_status(bot_status, activity_text)
     else:
-        global api_error_message
         if api_error_message is not None:
             await api_error_message.delete()
         
         print(f"Request failed with status code: {response.status_code}")
+        await update_bot_status(discord.Status.idle, "API Error")
         channel = bot.get_channel(channel_id)
-        embed = discord.Embed(title="API Error", description=f"Minehut-API request failed with status code: {response.status_code}", color=default_color)
+        embed = discord.Embed(title="API Error", description=f"Minehut-API request failed with status code: {response.status_code}", color=orange)
         api_error_message = await channel.send(embed=embed, silent=True)
         print(f"API Error message sent to {channel.name}")
+
+        # Delete "Server Info" message if it exists
+        if message is not None:
+            await message.delete()
+            message = None
+
         await update_bot_status(discord.Status.idle, "API Error")
 
-async def update_bot_status(status=discord.Status.online, activity_text=None):
+async def update_bot_status(status=discord.Status.invisible, activity_text=None):
     await bot.change_presence(status=status, activity=discord.Game(name=activity_text))
 
 bot.run(token)
