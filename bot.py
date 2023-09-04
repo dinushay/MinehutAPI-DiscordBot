@@ -113,7 +113,7 @@ async def query_api():
         if display_server_last_online:
             epoch_time = data['server']['last_online'] / 1000
             date_last_online = f"<t:{int(epoch_time)}:R>"
-            embed.add_field(name="Server last start", value=date_last_online, inline=False)
+            embed.add_field(name="Last server start", value=date_last_online, inline=False)
 
         if display_creation:
             date_creation = f"<t:{int(creation_timestamp / 1000)}:f>"
