@@ -164,11 +164,10 @@ async def query_api():
         print(f"Request failed with status code: {response.status_code}")
         await update_bot_status(discord.Status.idle, "API Error")
         channel = bot.get_channel(channel_id)
-        embed = discord.Embed(title="API Error", description=f"Minehut-API request failed with status code: {response.status_code}", color=orange)
+        embed = discord.Embed(title="API Error", description=f"Minehut-API request failed with status code: {response.status_code}")
         api_error_message = await channel.send(embed=embed, silent=True)
         print(f"API Error message sent to {channel.name}")
-
-        # Delete "Server Info" message if it exists
+        
         if message is not None:
             await message.delete()
             message = None
