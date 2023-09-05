@@ -11,6 +11,8 @@ git clone https://github.com/dinunuggets/MinehutAPI-DiscordBot.git
 2. Install the dependencies
 ```bash
 python3 -m pip install discord.py
+python3 -m pip install requests
+python3 -m pip install configparser
 ```
 3. Create a channel where **nobody can send messages** and copy the Channel-ID.
 
