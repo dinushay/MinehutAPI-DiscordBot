@@ -154,12 +154,18 @@ async def query_api():
             print(f"Message edited in {channel.name}")
 
         if api_error_message is not None:
-            await api_error_message.delete()
+            try:
+                await api_error_message.delete()
+            except discord.NotFound:
+                pass
         
         await update_bot_status(bot_status, activity_text)
     else:
         if api_error_message is not None:
-            await api_error_message.delete()
+            try:
+                await api_error_message.delete()
+            except discord.NotFound:
+                pass
         
         print(f"Request failed with status code: {response.status_code}")
         await update_bot_status(discord.Status.idle, "API Error")
@@ -169,7 +175,10 @@ async def query_api():
         print(f"API Error message sent to {channel.name}")
         
         if message is not None:
-            await message.delete()
+            try:
+                await message.delete()
+            except discord.NotFound:
+                pass
             message = None
 
         await update_bot_status(discord.Status.idle, "API Error")
