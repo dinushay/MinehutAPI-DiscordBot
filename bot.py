@@ -40,13 +40,14 @@ api_error_message = None
 async def on_ready():
     channel = bot.get_channel(channel_id)
 
-    async for message in channel.history(limit=1):
-        await message.delete()
-    
+    async for old_message in channel.history(limit=1):
+        await old_message.delete()
+
     print(f"Bot {bot.user.name} is online!")
 
-    query_api.change_interval(seconds=update_interval_seconds)
-    query_api.start()
+    if not query_api.is_running():
+        query_api.start()
+
     await update_bot_status()
 
 @tasks.loop(seconds=60)
