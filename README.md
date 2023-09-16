@@ -14,7 +14,7 @@ python3 -m pip install discord.py
 python3 -m pip install requests
 python3 -m pip install configparser
 ```
-3. Create a channel where **nobody can send messages** and copy the Channel-ID.
+3. Create a channel where **nobody can send messages** (Except for the bot, of course.) and copy the Channel-ID.
 
 ![image](https://github.com/DinuNuggets/MinehutAPI-DiscordBot/assets/61915816/23cf1b04-3156-40d9-80ef-d8194e75d5c4)
 
