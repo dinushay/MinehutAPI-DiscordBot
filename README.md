@@ -26,7 +26,7 @@ python3 -m pip install configparser
 ```bash
 python3 bot.py
 ```
-
+7. Invite your Bot here: https://discordapi.com/permissions.html
 
 ## Demo
 
