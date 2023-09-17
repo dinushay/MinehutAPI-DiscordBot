@@ -68,7 +68,6 @@ async def query_api():
         data = response.json()
         server_name = data['server']['name']
 
-        # Extract additional information from API data
         creation_timestamp = data['server']['creation']
         creation_datetime = datetime.datetime.fromtimestamp(creation_timestamp / 1000)
 
@@ -151,15 +150,19 @@ async def query_api():
             message = await channel.send(embed=embed, silent=True)
             print(f"Message sent to {channel.name}")
         else:
-            await message.edit(embed=embed)
-            print(f"Message edited in {channel.name}")
+            try:
+                await message.edit(embed=embed)
+                print(f"Message edited in {channel.name}")
+            except discord.NotFound:
+                message = await channel.send(embed=embed, silent=True)
+                print(f"Message sent to {channel.name}")
 
         if api_error_message is not None:
             try:
                 await api_error_message.delete()
             except discord.NotFound:
                 pass
-        
+
         await update_bot_status(bot_status, activity_text)
     else:
         if api_error_message is not None:
