@@ -102,43 +102,43 @@ async def query_api():
         embed = discord.Embed(title=f"Server Info - {server_name}", color=color)
 
         if display_server_status:
-            embed.add_field(name="Server status", value=status, inline=True)
+            embed.add_field(name=":desktop: ｜ Server status", value=status, inline=True)
 
         if display_server_online_players:
-            embed.add_field(name="Server online players", value=players_status, inline=True)
+            embed.add_field(name=":busts_in_silhouette: ｜ Server online players", value=players_status, inline=True)
 
         if display_total_joins:
-            embed.add_field(name="Total joins", value=data['server']['joins'], inline=False)
+            embed.add_field(name=":1234: ｜ Total joins", value=data['server']['joins'], inline=False)
 
         if display_server_last_online:
             epoch_time = data['server']['last_online'] / 1000
             date_last_online = f"<t:{int(epoch_time)}:R>"
-            embed.add_field(name="Last server start", value=date_last_online, inline=False)
+            embed.add_field(name=":clock3: ｜ Last server start", value=date_last_online, inline=False)
 
         if display_creation:
             date_creation = f"<t:{int(creation_timestamp / 1000)}:f>"
-            embed.add_field(name="Creation", value=date_creation, inline=True)
+            embed.add_field(name=":date: ｜ Creation", value=date_creation, inline=True)
 
         if display_motd:
-            embed.add_field(name="MOTD", value=f"```{motd}```", inline=True)
+            embed.add_field(name=":scroll: ｜ MOTD", value=f"```{motd}```", inline=True)
 
         if display_categories:
-            embed.add_field(name="Categories", value=categories, inline=True)
+            embed.add_field(name=":open_file_folder: ｜ Categories", value=categories, inline=True)
 
         if display_credits_per_day:
-            embed.add_field(name="Credits Per Day", value=credits_per_day, inline=True)
+            embed.add_field(name=":credit_card: ｜ Credits Per Day", value=credits_per_day, inline=True)
 
         if display_server_plan:
-            embed.add_field(name="Server Plan", value=server_plan, inline=True)
+            embed.add_field(name=":construction_site: ｜ Server Plan", value=server_plan, inline=True)
 
         if display_visibility:
-            embed.add_field(name="Visibility", value=visibility, inline=True)
+            embed.add_field(name=":eye: ｜ Visibility", value=visibility, inline=True)
 
         if display_suspended:
-            embed.add_field(name="Suspended", value=suspended, inline=True)
+            embed.add_field(name=":no_entry_sign: ｜ Suspended", value=suspended, inline=True)
 
         if display_server_version_type:
-            embed.add_field(name="Server Version Type", value=server_version_type, inline=True)
+            embed.add_field(name=":joystick: ｜ Server Version Type", value=server_version_type, inline=True)
 
         now = datetime.datetime.now()
         time = now.strftime("%M:%S")
