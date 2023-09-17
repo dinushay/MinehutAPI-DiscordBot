@@ -86,12 +86,12 @@ async def query_api():
                 status = "Online"
                 bot_status = discord.Status.online
                 color = discord.Color.green()
-                activity_text = f"{server_name} is online :green_circle:"
+                activity_text = f"{server_name} is online"
             else:
                 status = "Offline"
                 bot_status = discord.Status.dnd
                 color = discord.Color.dark_red()
-                activity_text = f"{server_name} is offline :red_circle:"
+                activity_text = f"{server_name} is offline"
         else:
             status = "N/A"
             color = default_color
